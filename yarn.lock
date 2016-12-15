@@ -209,6 +209,10 @@ commander@^2.9.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
+commandline-parser@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/commandline-parser/-/commandline-parser-0.4.0.tgz#bfd4ce83745db4a9536fca0fc2c1936013abdbbe"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"

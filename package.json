@@ -1,10 +1,11 @@
 {
   "name": "video-server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "commandline-parser": "^0.4.0",
     "express": "^4.14.0",
     "multer": "^1.2.1",
     "shortid": "^2.2.6"

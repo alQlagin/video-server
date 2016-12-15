@@ -33,7 +33,22 @@ renders sample view with html5 video object
 
 send partial content video streaming
 
+## CLI
+Install video server as global dependency
+```bash
+npm install -g video-server
+```
 
+Then run 
+```bash
+video-server [-p] [-d]
+```
+`-p, --port` - port for web server
+ 
+`-d, --storage_dir` - path for direcoty with video
+
+`-h, --help` - help
+  
 ## Options
 
 ### PORT

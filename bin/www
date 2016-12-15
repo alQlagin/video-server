@@ -1,13 +1,44 @@
-
+#!/bin/node
 const path = require('path');
 const fs = require('fs');
 const pkg = require('../package.json');
 const app = require('../index');
-app.set('PORT', 80);
+
+var Parser = require('commandline-parser').Parser,
+    parser = new Parser({
+        name : "video server",
+    });
+
+parser.addArgument('port' ,{
+   flags : ['p','port'], //default is name
+   desc : "assign port", //default is ''
+   action : function(value, parser){
+        app.set('PORT', value);
+   }
+});
+
+parser.addArgument('storage_dir' ,{
+   flags : ['d','storage_dir'], //default is name
+   desc : "where files are placed", //default is ''
+   action : function(value, parser){
+        app.set('STORAGE_DIR', value);
+   }
+});
+
+parser.registerActions({
+    help : function(value, parser){
+        parser.printHelp();
+        process.exit();
+    }
+});
+
+parser.exec();
+
 if (!fs.existsSync(app.get('STORAGE_DIR'))){
     console.error(app.get('STORAGE_DIR')+' not exists');
     return;
 }
 app.listen(app.get('PORT'), function () {
     console.log(`${pkg.name} started at %s`, app.get('PORT'))
+    console.log(`files served from %s`, app.get('STORAGE_DIR'))
 });
