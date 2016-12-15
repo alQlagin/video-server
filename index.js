@@ -89,7 +89,7 @@ app.use(function (err, req, res, next) {
 module.exports = app;
 
 function stream(req, res, next) {
-    var range = req.headers.range;
+    var range = req.headers.range || "bytes=0-";
     if (!range) {
         // 416 Wrong range
         return res.sendStatus(416);
