@@ -1,0 +1,13 @@
+
+const path = require('path');
+const fs = require('fs');
+const pkg = require('../package.json');
+const app = require('../index');
+app.set('PORT', 80);
+if (!fs.existsSync(app.get('STORAGE_DIR'))){
+    console.error(app.get('STORAGE_DIR')+' not exists');
+    return;
+}
+app.listen(app.get('PORT'), function () {
+    console.log(`${pkg.name} started at %s`, app.get('PORT'))
+});
