@@ -43,9 +43,15 @@ app.post('/upload', upload.single('video'),
         }
     }
 );
-
+app.param('category', function (req, res, next, category) {
+    req.category = category;
+    next();
+});
 app.param('id', function (req, res, next, id) {
-    var file = path.resolve(STORAGE_DIR, id);
+    if (req.category) {
+        id = req.category + "/" + id;
+    }
+    var file = path.resolve(app.get('STORAGE_DIR'), id);
     fs.stat(file, function (err, stats) {
         if (err) {
             if (err.code === 'ENOENT') {
@@ -67,7 +73,22 @@ app.get('/view/:id', function (req, res, next) {
     res.writeHead(200, {"Content-Type": "text/html"});
     res.end(`<video src="/stream/${req.file.id}" controls></video>`);
 });
-app.get('/stream/:id', function (req, res, next) {
+app.get('/view/:category/:id', function (req, res, next) {
+    res.writeHead(200, {"Content-Type": "text/html"});
+    res.end(`<video src="/stream/${req.file.id}" controls></video>`);
+});
+
+app.get('/stream/:id', stream);
+app.get('/stream/:category/:id', stream);
+
+app.use(function (err, req, res, next) {
+    console.log(err);
+    res.status(500).json({message: err.message});
+});
+
+module.exports = app;
+
+function stream(req, res, next) {
     var range = req.headers.range;
     if (!range) {
         // 416 Wrong range
@@ -93,11 +114,4 @@ app.get('/stream/:id', function (req, res, next) {
         .on("error", function (err) {
             next(err);
         });
-});
-
-app.use(function (err, req, res, next) {
-    console.log(err);
-    res.status(500).json({message: err.message});
-});
-
-module.exports = app;
+}
