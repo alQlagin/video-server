@@ -9,6 +9,7 @@ const fs = require('fs');
 const shortid = require('shortid');
 const multer = require('multer');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 app.set('STORAGE_DIR', path.resolve(__dirname, 'storage'));
@@ -30,7 +31,7 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({storage});
-
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
