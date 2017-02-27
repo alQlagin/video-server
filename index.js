@@ -5,7 +5,7 @@
 
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const fs = require('graceful-fs');
 const shortid = require('shortid');
 const multer = require('multer');
 const bodyParser = require('body-parser');
